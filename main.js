@@ -78,26 +78,21 @@ function checkForWin () {
   return win;
 }
 
-function ticTacToe (row, column) {
+const ticTacToe = (row, column) => {
   // Your code here to place a marker on the board
   board[row][column] = playerTurn;
-
-  // then check for a win
-  var win = false;
-  win = checkForWin();
-  return win;
+  playerTurn = switchPlayer(playerTurn);
 }
 
 const getPrompt = () => {
-  var gameOver = false;
   printBoard();
   console.log("It's Player " + playerTurn + "'s turn.");
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
-      gameOver = ticTacToe(row, column);
-      if (gameOver == false)
+      ticTacToe(row, column);
+      checkForWin();
+      if (checkForWin() == false)
       {
-        playerTurn = switchPlayer(playerTurn);
         getPrompt();
       }
       else
@@ -109,9 +104,9 @@ const getPrompt = () => {
   });
 }
 
-function switchPlayer(playerTurn)
+function switchPlayer (playerTurn)
 {
-  if(playerTurn == 'X')
+  if (playerTurn == 'X')
   {
     playerTurn = 'O';
   }
@@ -119,7 +114,7 @@ function switchPlayer(playerTurn)
   {
     playerTurn = 'X';
   }
-  return(playerTurn);
+  return playerTurn;
 }
 
 // Unit Tests
