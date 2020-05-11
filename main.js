@@ -32,38 +32,95 @@ const printBoard = () => {
   console.log('2 ' + board[2].join(' | '));
 }
 
-const horizontalWin = () => {
+function horizontalWin () {
   // Your code here to check for horizontal wins
+  var win = false; 
+  for (let row = 0; row <= 2; row++)
+  {
+    if(board[row][0] == playerTurn && board[row][1] == playerTurn && board[row][2] == playerTurn)
+    {
+      win = true;
+    }
+  }
+  return win;
 }
 
-const verticalWin = () => {
+function verticalWin () {
   // Your code here to check for vertical wins
+  var win = false; 
+  for (let column = 0; column <= 2; column++)
+  {
+    if(board[0][column] == playerTurn && board[1][column] == playerTurn && board[2][column] == playerTurn)
+    {
+      win = true;
+    }
+  }
+  return win;
 }
 
-const diagonalWin = () => {
+function diagonalWin () {
   // Your code here to check for diagonal wins
+  var win = false; 
+  if (board[0][0] == playerTurn && board[1][1] == playerTurn && board[2][2] == playerTurn || board[0][2] == playerTurn && board[1][1] == playerTurn && board[2][0] == playerTurn)
+  {
+    win = true;
+  }
+  return win;
 }
 
-const checkForWin = () => {
+function checkForWin () {
   // Your code here call each of the check for types of wins
+  var win = false;
+  if (horizontalWin() || verticalWin() || diagonalWin())
+  {
+      win = true;
+  }
+  return win;
 }
 
-const ticTacToe = (row, column) => {
+function ticTacToe (row, column) {
   // Your code here to place a marker on the board
+  board[row][column] = playerTurn;
+
   // then check for a win
+  var win = false;
+  win = checkForWin();
+  return win;
 }
 
 const getPrompt = () => {
+  var gameOver = false;
   printBoard();
   console.log("It's Player " + playerTurn + "'s turn.");
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
-      ticTacToe(row, column);
-      getPrompt();
+      gameOver = ticTacToe(row, column);
+      if (gameOver == false)
+      {
+        playerTurn = switchPlayer(playerTurn);
+        getPrompt();
+      }
+      else
+      {
+        printBoard();
+        console.log("Player " + playerTurn + " wins!");
+      }
     });
   });
 }
 
+function switchPlayer(playerTurn)
+{
+  if(playerTurn == 'X')
+  {
+    playerTurn = 'O';
+  }
+  else
+  {
+    playerTurn = 'X';
+  }
+  return(playerTurn);
+}
 
 // Unit Tests
 // You use them run the command: npm test main.js
