@@ -38,6 +38,8 @@ const addMarker = (id) => {
   
   // Arrange the above pieces into one a single line of code
   // to add an X or O to the board to the DOM so it can be scene on the screen.
+
+  document.getElementById(id).innerHTML = currentMarker;
 }
 
 // passes the element's id attribute from HTML to be used
@@ -50,7 +52,8 @@ const updateBoard = (id) => {
   console.log(board)
 
   // @TODO, Your code here: use the above information to change the board variable(array of arrays)
-  // HINT: in your browser open up the dev tools -> console
+  // HINT: in your browser open up the dev tools -> 
+  board[row][column] = currentMarker;
 }
 
 const checkForWin = () => {
@@ -66,14 +69,38 @@ const checkForWin = () => {
 
 const horizontalWin = () => {
   // @TODO, Your code here: to check for horizontal wins
+  var win = false; 
+  for (let row = 0; row <= 2; row++)
+  {
+    if(board[row][0] == currentMarker && board[row][1] == currentMarker && board[row][2] == currentMarker)
+    {
+      win = true;
+    }
+  }
+  return win;
 }
 
 const verticalWin = () => {
   // @TODO, Your code here: to check for vertical wins
+  var win = false; 
+  for (let column = 0; column <= 2; column++)
+  {
+    if(board[0][column] == currentMarker && board[1][column] == currentMarker && board[2][column] == currentMarker)
+    {
+      win = true;
+    }
+  }
+  return win;
 }
 
 const diagonalWin = () => {
   // @TODO, Your code here: to check for diagonal wins
+  var win = false; 
+  if (board[0][0] == currentMarker && board[1][1] == currentMarker && board[2][2] == currentMarker || board[0][2] == currentMarker && board[1][1] == currentMarker && board[2][0] == currentMarker)
+  {
+    win = true;
+  }
+  return win;
 }
 
 const changeMarker = () => {
@@ -83,7 +110,7 @@ const changeMarker = () => {
 
 const resetBoard = () => {
   // sanity check: this tells us the function is being called
-  console.log("the board was cleared!")
+  console.log("The board was cleared!")
 
   // collects all of the "td"s into an HTML Collection: https://www.w3schools.com/jsref/dom_obj_htmlcollection.asp  
   const squares = document.getElementsByTagName("TD")
@@ -95,6 +122,13 @@ const resetBoard = () => {
   }
   
   // @TODO, Your code here: make sure to reset the array of arrays to empty for a new game
+  for(let i=0; i<=2; i++)
+  {
+    for(let j=0; j<=2; j++)
+    {
+      board[i][j] = '';
+    }
+  }
 }
 
 // **BONUSES**
